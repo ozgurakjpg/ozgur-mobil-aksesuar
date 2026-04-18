@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özgür Mobil Aksesuar | Profesyonel Mağaza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #f5f5f5; color: #484848; }
+
+        /* HEADER & NAV */
+        .top-bar { background: #333; color: white; text-align: center; padding: 8px; font-size: 13px; }
+        header { background-color: #ff6000; padding: 15px 5%; color: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 24px; font-weight: bold; }
+        .search-container { flex-grow: 1; margin: 0 20px; display: flex; max-width: 500px; }
+        .search-container input { width: 100%; padding: 10px; border-radius: 8px 0 0 8px; border: none; outline: none; }
+        .search-container button { padding: 10px 20px; background: #333; color: white; border: none; border-radius: 0 8px 8px 0; cursor: pointer; }
+        nav ul { list-style: none; display: flex; gap: 20px; }
+        nav ul li a { color: white; text-decoration: none; font-weight: 600; }
+
+        /* KATEGORİLER */
+        .quick-categories { display: flex; justify-content: center; gap: 15px; margin: 30px auto; max-width: 1200px; padding: 0 10px; flex-wrap: wrap; }
+        .cat-item { background: white; border: 1px solid #e2e2e2; border-radius: 12px; padding: 15px; width: 120px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .cat-item:hover { border-color: #ff6000; transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .cat-circle { font-size: 24px; background: #fdf2e9; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
+
+        /* ÜRÜN KARTLARI */
+        #urunler { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1200px; margin: 20px auto; padding-bottom: 50px; }
+        .urun-kart { background: white; border: 1px solid #eee; padding: 15px; width: 260px; text-align: center; border-radius: 12px; transition: 0.3s; position: relative; }
+        .urun-kart:hover { border-color: #ff6000; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .discount-badge { position: absolute; top: 10px; left: 10px; background: #ef4444; color: white; padding: 4px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; }
+        .urun-kart img { max-width: 100%; height: 180px; object-fit: contain; margin-bottom: 10px; }
+        .stars { color: #ffb100; font-size: 13px; margin: 5px 0; }
+        .old-price { font-size: 14px; text-decoration: line-through; color: #999; }
+        .current-price { font-size: 20px; font-weight: bold; color: #ff6000; margin-bottom: 10px; }
+        .urun-kart button { width: 100%; padding: 12px; background: #2fb430; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .urun-kart button:hover { background: #269127; }
+
+        /* SEPET BÖLÜMÜ */
+        #sepet-bolumu { display: none; max-width: 800px; margin: 40px auto; padding: 25px; background: white; border: 2px solid #ff6000; border-radius: 15px; }
+        .sepet-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .toplam-alan { font-size: 22px; font-weight: bold; text-align: right; margin-top: 15px; color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">Fırsat Günleri! Seçili Aksesuarlarda Sepette İndirim Avantajı.</div>
+
+    <header>
+        <nav>
+            <div class="logo">Özgür Mobil</div>
+            <div class="search-container">
+                <input type="text" placeholder="Ürün veya marka ara...">
+                <button>Ara</button>
+            </div>
+            <ul>
+                <li><a href="#" onclick="kategoriFiltrele('hepsi')">Ana Sayfa</a></li>
+                <li><a href="#sepet-bolumu" id="sepet-sayac">Sepetim (0)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="quick-categories">
+        <div class="cat-item" onclick="kategoriFiltrele('hepsi')"><div class="cat-circle">🔍</div><span>Tümü</span></div>
+        <div class="cat-item" onclick="kategoriFiltrele('kilif')"><div class="cat-circle">📱</div><span>Kılıflar</span></div>
+        <div class="cat-item" onclick="kategoriFiltrele('sarj')"><div class="cat-circle">🔌</div><span>Şarj</span></div>
+        <div class="cat-item" onclick="kategoriFiltrele('kulaklik')"><div class="cat-circle">🎧</div><span>Kulaklık</span></div>
+        <div class="cat-item" onclick="kategoriFiltrele('aksesuar')"><div class="cat-circle">⌚</div><span>Aksesuar</span></div>
+    </section>
+
+    <h2 style="text-align: center; margin-bottom: 30px;">Sizin İçin Seçtiklerimiz</h2>
+
+    <main id="urunler">
+        <div class="urun-kart" data-category="kilif">
+            <div class="discount-badge">%30 İndirim</div>
+            <img src="img/apple-apple-iphone-12-kilif-seffaf-shock-proof-magnetic-ultra-protection-wireless-case-kcm96644616-1-486c9eec3bb740d4913e7a4d6bb61ad3.jpg">
+            <h3>iPhone 12 Şeffaf Kılıf</h3>
+            <div class="stars">★★★★★ (124 Yorum)</div>
+            <p class="old-price">450,00 TL</p>
+            <p class="current-price">299,90 TL</p>
+            <button onclick="sepeteEkle('iPhone 12 Şeffaf Kılıf', 299.90)">Sepete Ekle</button>
+        </div>
+
+        <div class="urun-kart" data-category="kilif">
+            <div class="discount-badge">%20 İndirim</div>
+            <img src="img/apple-iphone-12-pro-max-guard-kamera-korumali-silikon-kilif-renk-9-c0638a8e-c684.webp">
+            <h3>iPhone 12 Pro Max Kılıf</h3>
+            <div class="stars">★★★★☆ (85 Yorum)</div>
+            <p class="old-price">499,00 TL</p>
+            <p class="current-price">359,90 TL</p>
+            <button onclick="sepeteEkle('iPhone 12 Pro Max Kılıf', 359.90)">Sepete Ekle</button>
+        </div>
+
+        <div class="urun-kart" data-category="kilif">
+            <img src="img/apple-iphone-13-kilif-wireless-sarj-ozellikli-zore-hibrit-magsafe-kapak-iphone-13-zore-272611-25-B.jpg">
+            <h3>iPhone 13 MagSafe Kılıf</h3>
+            <div class="stars">★★★★★ (1.200 Yorum)</div>
+            <p class="current-price">299,90 TL</p>
+            <button onclick="sepeteEkle('iPhone 13 MagSafe Kılıf', 299.90)">Sepete Ekle</button>
+        </div>
+  <div class="urun-kart" data-category="kulaklik">
+            <img src="img/images.jpg">
+            <h3>İphone 13 Pro Max Magsafe Kılıf</h3>
+            <div class="stars">★★★★☆ (1250+Yorum)</div>
+            <p class="current-price">299,90 TL</p>
+            <button onclick="sepeteEkle('kılıf', 299,90)">Sepete Ekle</button>
+        </div>
+
+
+
+
+        <div class="urun-kart" data-category="kilif">
+            <img src="img/apple-iphone-14-kilif-parlak-tasli-tasarim-zore-linea-kapak-iphone-14-zore-290328-27-B.jpg">
+            <h3>iPhone 14 Parlak Kılıf</h3>
+            <div class="stars">★★★★☆ (21 Yorum)</div>
+            <p class="current-price">299,90 TL</p>
+            <button onclick="sepeteEkle('iPhone 14 Parlak Kılıf', 299.90)">Sepete Ekle</button>
+        </div>
+  <div class="urun-kart" data-category="kulaklik">
+            <img src="img/14 pro max silikon kılıf.jpg">
+            <h3>İphone 14 Pro Max Silikon Kılıf</h3>
+            <div class="stars">★★★★☆ (1250+Yorum)</div>
+            <p class="current-price">299,90 TL</p>
+            <button onclick="sepeteEkle('kılıf', 300)">Sepete Ekle</button>
+        </div>
+
+ <div class="urun-kart" data-category="kulaklik">
+            <img src="img/s24 ultra MAge Safe kılıf.webp">
+            <h3>Samsung S24 Ultra telefon Kılıfı</h3>
+            <div class="stars">★★★★☆ (1250+Yorum)</div>
+            <p class="current-price">300 TL</p>
+            <button onclick="sepeteEkle('kılıf', 300)">Sepete Ekle</button>
+        </div>
+
+         <div class="urun-kart" data-category="kulaklik">
+            <img src="img/s24 ultra Silikon kılıf.webp">
+            <h3>Samsung S24 Ultra Silikon telefon Kılıfı</h3>
+            <div class="stars">★★★☆ (125Yorum)</div>
+            <p class="current-price">300TL</p>
+            <button onclick="sepeteEkle('kılıf', 300)">Sepete Ekle</button>
+        </div>
+              <div class="urun-kart" data-category="kulaklik">
+            <img src="img/Samsung A55 Magesafe Kılıf.jpg">
+            <h3>Samsung Galaxy A55 Telelfon Kılıfı</h3>
+            <div class="stars">★★★☆ (125Yorum)</div>
+            <p class="current-price">359,90TL</p>
+            <button onclick="sepeteEkle('kılıf', 359,90)">Sepete Ekle</button>
+        </div>
+      <div class="urun-kart" data-category="kulaklik">
+            <img src="img/s24 ultra Silikon kılıf.webp" width=""
+            <h3>Samsung S24 Ultra Silikon telefon Kılıfı</h3>
+            <div class="stars">★★★☆ (125Yorum)</div>
+            <p class="current-price">300TL</p>
+            <button onclick="sepeteEkle('kılıf', 300)">Sepete Ekle</button>
+        </div>
+ 
+           <div class="urun-kart" data-category="sarj">
+            <img src="img/samsung adaptör.webp">
+            <h3>Samsung 25W Güç Adaptörü</h3>
+            <div class="stars">★★★★★ (2.450 Yorum)</div>
+            <p class="current-price">525,90 TL</p>
+            <button onclick="sepeteEkle('Adaptör', 525,90)">Sepete Ekle</button>
+        </div>
+ <div class="urun-kart" data-category="sarj">
+            <img src="img/samsung kablolu şarz aleti.webp">
+            <h3>SAMSUNGŞarj Kablosu</h3>
+            <div class="stars">★★★★★ (2.450 Yorum)</div>
+            <p class="current-price">399,90 TL</p>
+            <button onclick="sepeteEkle('Şarj Kablosu', 399.90)">Sepete Ekle</button>
+        </div>
+
+        
+
+
+
+        <div class="urun-kart" data-category="sarj">
+            <img src="img/şarj kablo.webp">
+            <h3>iPhone Hızlı Şarj Kablosu</h3>
+            <div class="stars">★★★★★ (2.450 Yorum)</div>
+            <p class="current-price">399,90 TL</p>
+            <button onclick="sepeteEkle('iPhone Şarj Kablosu', 399.90)">Sepete Ekle</button>
+        </div>
+
+        <div class="urun-kart" data-category="sarj">
+            <img src="img/batarya adaptör.webp">
+            <h3>20W Hızlı Şarj Adaptörü</h3>
+            <div class="stars">★★★★★ (3.100 Yorum)</div>
+            <p class="current-price">659,90 TL</p>
+            <button onclick="sepeteEkle('iPhone Adaptör', 659.90)">Sepete Ekle</button>
+        </div>
+  <div class="urun-kart" data-category="kulaklik">
+            <img src="img/apple airpods 3. nesil.webp">
+            <h3>Apple 3.nesil Airpods </h3>
+            <div class="stars">★★★★☆ (1250+Yorum)</div>
+            <p class="current-price">1085TL</p>
+            <button onclick="sepeteEkle('Kablolu Kulaklık', 1459.90)">Sepete Ekle</button>
+        </div>
+
+
+
+
+        <div class="urun-kart" data-category="kulaklik">
+            <img src="img/Apple Airpods 4. Nesil.webp">
+            <h3>Apple Airpods 4. Nesil</h3>
+            <div class="stars">★★★★★ (15.000+ Yorum)</div>
+            <p class="current-price">5.120,90 TL</p>
+            <button onclick="sepeteEkle('Airpods 4. Nesil', 5120.90)">Sepete Ekle</button>
+        </div>
+
+        <div class="urun-kart" data-category="kulaklik">
+            <img src="img/Apple Airpods Kablolu Kulak.webp">
+            <h3>Apple EarPods (Kablolu)</h3>
+            <div class="stars">★★★★☆ (450 Yorum)</div>
+            <p class="current-price">1.459,90 TL</p>
+            <button onclick="sepeteEkle('Kablolu Kulaklık', 1459.90)">Sepete Ekle</button>
+        </div>
+   
+    
+    
+    
+    
+    </main>
+
+    <section id="sepet-bolumu">
+        <h2>🛒 Sipariş Özetiniz</h2>
+        <div id="liste-konteynir"></div>
+        <div class="toplam-alan">Toplam: <span id="toplam-fiyat">0.00</span> TL</div>
+        <button class="btn-tamamla" onclick="alert('Siparişiniz alındı! Teşekkür ederiz.')">Siparişi Tamamla</button>
+    </section>
+
+    <script>
+        let sepet = [];
+        let toplam = 0;
+
+        function sepeteEkle(ad, fiyat) {
+            sepet.push({ad, fiyat});
+            toplam += fiyat;
+            document.getElementById('sepet-sayac').innerText = `Sepetim (${sepet.length})`;
+            
+            if(confirm(ad + ' sepete eklendi. Ödeme adımına geçmek ister misiniz?')) {
+                sepetiGuncelle();
+                document.getElementById('sepet-bolumu').style.display = 'block';
+                window.location.hash = "sepet-bolumu";
+            }
+        }
+
+        function sepetiGuncelle() {
+            const liste = document.getElementById('liste-konteynir');
+            liste.innerHTML = "";
+            sepet.forEach(item => {
+                liste.innerHTML += `<div class="sepet-item"><span>${item.ad}</span><span>${item.fiyat.toLocaleString('tr-TR')} TL</span></div>`;
+            });
+            document.getElementById('toplam-fiyat').innerText = toplam.toLocaleString('tr-TR', {minimumFractionDigits: 2});
+        }
+
+        function kategoriFiltrele(kategori) {
+            const urunler = document.querySelectorAll('.urun-kart');
+            urunler.forEach(urun => {
+                const cat = urun.getAttribute('data-category');
+                if (kategori === 'hepsi' || cat === kategori) {
+                    urun.style.display = 'block';
+                } else {
+                    urun.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
